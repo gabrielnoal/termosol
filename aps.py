@@ -21,6 +21,8 @@ numero_de_cargas = nc
 vetor_carregamento = F
 numero_de_restricoes = nr
 vetor_restricoes = R
+Matriz_base = [[0 for x in range(numero_matriz)] for y in range(numero_matriz)]
+##################################SETAR AQUI O NUMERO MATRIZ#####################################
 
 elementos = []
 

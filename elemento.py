@@ -1,6 +1,6 @@
 import math
 import numpy as np
-
+from itertools import permutations
 
 def retorna_K(p1,p2,E,A,L,sen,cos):
   mat_cos_sen = [
@@ -17,8 +17,25 @@ def retorna_K(p1,p2,E,A,L,sen,cos):
       item = int(item)
       Ke = produtoEA * item
       matriz_result[element].append(Ke)
-  
+
   return matriz_result
+
+def retorna_matriz_global(elemento):
+    listas_combinacoes_incidencia = [[] for i in range(len(elemento.incidencia) + 2)]
+
+    listas_combinacoes_incidencia[0] = [elemento.incidencia[0],elemento.incidencia[0]]
+    listas_combinacoes_incidencia[1] = [elemento.incidencia[0],elemento.incidencia[1]]
+    listas_combinacoes_incidencia[2] = [elemento.incidencia[1],elemento.incidencia[0]]
+    listas_combinacoes_incidencia[3] = [elemento.incidencia[1],elemento.incidencia[1]]
+
+    for item in range(len(listas_combinacoes_incidencia)):
+        soma_acumulativa_matriz_geral = elemento.Matriz_base[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]]
+        soma_parcial_matriz_k = elemento.matrizK[listas_combinacoes_incidencia[item[0]]][listas_combinacoes_incidencia[item][1]]
+
+        soma_final_matriz_geral = soma_acumulativa_matriz_geral + soma_parcial_matriz_k
+        elemento.Matriz_base[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]] += soma_final_matriz_geral
+
+    return elemento.Matriz_base
 
 class Elemento(object):
   def __init__(self, p1, p2, E, A, incidencia):
@@ -34,6 +51,3 @@ class Elemento(object):
     self.sen = (y2-y1)/self.L
     self.cos = (x2-x1)/self.L
     self.matrizK = retorna_K(p1,p2,E,A,self.L,self.sen,self.cos)
-
-
-
