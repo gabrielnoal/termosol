@@ -2,7 +2,7 @@ import math
 import numpy as np
 from itertools import permutations
 
-def retorna_K(p1,p2,E,A,L,sen,cos):
+def retorna_K(E,A,L,sen,cos):
   mat_cos_sen = [
     [cos**2 , cos*sen , -cos**2 , -cos*sen],
     [cos*sen , sen**2 , -cos*sen , -sen**2],
@@ -42,23 +42,22 @@ class Elemento(object):
     self.numero = numero
     self.p1 = p1
     self.p2 = p2
+    self.gdls = [p1.gdl[0],p1.gdl[1], p2.gdl[0], p2.gdl[1]]
     self.E = E
     self.A = A
     self.incidencia = incidencia
-    [x1, y1] = p1
-    [x2, y2] = p2
+
+    [x1, y1] = [p1.x, p1.y]
+    [x2, y2] = [p2.x, p2.y]
 
     self.L = math.sqrt(((x2-x1)**2) + ((y2-y1)**2))
     self.sen = (y2-y1)/self.L
     self.cos = (x2-x1)/self.L
-    self.matrizK = retorna_K(p1,p2,E,A,self.L,self.sen,self.cos)
+    self.matrizK = retorna_K(E,A,self.L,self.sen,self.cos)
 
 class Ponto(object):
-  def __init__(self, numero, cordenadas, gdlx, gdly):
+  def __init__(self, numero, cordenadas):
     self.numero = numero
-    [x, y] = cordenadas
-    self.x = x
-    self.y = y
-    self.gdlx = gdlx
-    self.gdly = gdly
-    
+    self.x = cordenadas[0]
+    self.y = cordenadas[1]
+    self.gdl = [2 * numero - 1, 2 * numero]
