@@ -20,22 +20,22 @@ def retorna_K(p1,p2,E,A,L,sen,cos):
 
   return matriz_result
 
-def retorna_matriz_global(elemento):
-    listas_combinacoes_incidencia = [[] for i in range(len(elemento.incidencia) + 2)]
+def retorna_matriz_global(incidencia,mb,matrizK):
+    listas_graus_de_liberdade = [[] for i in range(len(incidencia) + 2)]
 
-    listas_combinacoes_incidencia[0] = [elemento.incidencia[0],elemento.incidencia[0]]
-    listas_combinacoes_incidencia[1] = [elemento.incidencia[0],elemento.incidencia[1]]
-    listas_combinacoes_incidencia[2] = [elemento.incidencia[1],elemento.incidencia[0]]
-    listas_combinacoes_incidencia[3] = [elemento.incidencia[1],elemento.incidencia[1]]
+    listas_combinacoes_incidencia[0] = [incidencia[0],incidencia[0]]
+    listas_combinacoes_incidencia[1] = [incidencia[0],incidencia[1]]
+    listas_combinacoes_incidencia[2] = [incidencia[1],incidencia[0]]
+    listas_combinacoes_incidencia[3] = [incidencia[1],incidencia[1]]
 
-    for item in range(len(listas_combinacoes_incidencia)):
-        soma_acumulativa_matriz_geral = elemento.Matriz_base[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]]
-        soma_parcial_matriz_k = elemento.matrizK[listas_combinacoes_incidencia[item[0]]][listas_combinacoes_incidencia[item][1]]
+    # for item in range(len(listas_combinacoes_incidencia)):
+    #     soma_acumulativa_matriz_geral = mb[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]]
+    #     soma_parcial_matriz_k = matrizK[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]]
+    # 
+    #     soma_final_matriz_geral = soma_acumulativa_matriz_geral + soma_parcial_matriz_k
+    #     mb[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]] += soma_final_matriz_geral
 
-        soma_final_matriz_geral = soma_acumulativa_matriz_geral + soma_parcial_matriz_k
-        elemento.Matriz_base[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]] += soma_final_matriz_geral
-
-    return elemento.Matriz_base
+    return mb
 
 class Elemento(object):
   def __init__(self, numero, p1, p2, E, A, incidencia):

@@ -21,8 +21,8 @@ numero_de_cargas = nc
 vetor_carregamento = F
 numero_de_restricoes = nr
 vetor_restricoes = R
-Matriz_base = [[0 for x in range(numero_matriz)] for y in range(numero_matriz)]
-##################################SETAR AQUI O NUMERO MATRIZ#####################################
+numero_i_j = 2 * numero_de_nos
+Matriz_base = [[0 for x in range(numero_i_j)] for y in range(numero_i_j)]
 
 elementos = []
 
@@ -35,4 +35,10 @@ for i in range(o_numero_de_membros):
 
   elementos.append(Elemento(p1,p2,E,A,incidencia))
 
-print(elementos[0].matrizK)
+  print("Matriz k: ")
+  print(elementos[0].matrizK)
+  Matriz_base = retorna_matriz_global(incidencia,Matriz_base,elementos[0].matrizK)
+  print("")
+  print("Matriz Global:")
+  print(Matriz_base)
+# print(elementos[0].matrizK)
