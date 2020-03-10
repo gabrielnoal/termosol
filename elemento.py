@@ -38,7 +38,8 @@ def retorna_matriz_global(elemento):
     return elemento.Matriz_base
 
 class Elemento(object):
-  def __init__(self, p1, p2, E, A, incidencia):
+  def __init__(self, numero, p1, p2, E, A, incidencia):
+    self.numero = numero
     self.p1 = p1
     self.p2 = p2
     self.E = E
@@ -51,3 +52,13 @@ class Elemento(object):
     self.sen = (y2-y1)/self.L
     self.cos = (x2-x1)/self.L
     self.matrizK = retorna_K(p1,p2,E,A,self.L,self.sen,self.cos)
+
+class Ponto(object):
+  def __init__(self, numero, cordenadas, gdlx, gdly):
+    self.numero = numero
+    [x, y] = cordenadas
+    self.x = x
+    self.y = y
+    self.gdlx = gdlx
+    self.gdly = gdly
+    
