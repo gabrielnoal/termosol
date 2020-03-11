@@ -52,6 +52,30 @@ def retorna_matriz_global(gdl,matrizK,matrizGlobal,numero_i_j):
 
     return matrizGlobal
 
+
+def AplicarContorno(matrizk, vetorP):
+    delLista=[]
+    contador=0
+    print()
+    for i in range(len(vetorP)):
+      if (vetorP[i] =="r"):
+        delLista.append(i)
+        print(i)
+#del linha
+    for h in range(len(matrizk)):
+      for posD in delLista:
+        del matrizk[h][posD-contador]
+        contador=+1
+#del col
+    contador=0
+    for posD in delLista:
+      del matrizk[posD-contador]
+      del vetorP[posD-contador]
+      contador=+1
+
+    return matrizk, vetorP        
+
+
 class Elemento(object):
   def __init__(self, numero, p1, p2, E, A, incidencia):
     self.numero = numero

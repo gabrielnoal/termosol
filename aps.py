@@ -56,3 +56,13 @@ for elemento in elementos:
   print("matrizK: " + str(elemento.matrizK))
   print("GDL: " + str(elemento.gdls) + "\n")
   matrizGlobal = retorna_matriz_global(elemento.gdls,elemento.matrizK,Matriz_base,numero_i_j)
+
+#contorno da matriz 
+print("Geral: " + str(matrizGlobal) + "\n")
+print("Tamanho Matriz: " + str(len(matrizGlobal)) + "\n")  
+matrizContornada,vetorContornado=AplicarContorno(matrizGlobal,[2,3,"r",4,"r",5])
+print("Matriz Contornada: " + str(matrizContornada) + "\n")
+print("Tamanho Matriz Contornada: " + str(len(matrizContornada)) + "\n")  
+print("Vetor Contornado: " + str(vetorContornado) + "\n")
+
+
