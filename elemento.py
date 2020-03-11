@@ -52,28 +52,6 @@ def retorna_matriz_global(gdl,matrizK,matrizGlobal,numero_i_j):
 
     return matrizGlobal
 
-    # print("")
-    # print("lista_soma_acumulativa")
-    # print(lista_soma_acumulativa)
-    #
-    # for item in range(len(lista_final_index_acumulativa)):
-    #     soma_matrizGlobal_acumulativa = matrizGlobal[lista_comb_gdl[item][0]][lista_comb_gdl[item][1]]
-    #     lista_soma_parcial_matriz_global.append(soma_matrizGlobal_acumulativa)
-    #
-    # for item in range(len(lista_soma_parcial_matriz_global)):
-    #     soma_elemento = lista_soma_parcial_matriz_global[item] + lista_soma_acumulativa[item]
-    #     lista_soma_total_matriz_global.append(soma_elemento)
-    # print("")
-    # print("lista_soma_parcial_matriz_global:")
-    # print(lista_soma_parcial_matriz_global)
-    # print("")
-    # print("lista_soma_total_matriz_global:")
-    # print(lista_soma_total_matriz_global)
-    # for item in range(len(lista_comb_gdl)):
-    #     matrizGlobal[lista_comb_gdl[item][0]][lista_comb_gdl[item][1]] = lista_soma_parcial_matriz_global[item] + lista_soma_total_matriz_global[item]
-    #
-    # return matrizGlobal
-
 class Elemento(object):
   def __init__(self, numero, p1, p2, E, A, incidencia):
     self.numero = numero

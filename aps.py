@@ -56,5 +56,3 @@ for elemento in elementos:
   print("matrizK: " + str(elemento.matrizK))
   print("GDL: " + str(elemento.gdls) + "\n")
   matrizGlobal = retorna_matriz_global(elemento.gdls,elemento.matrizK,Matriz_base,numero_i_j)
-
-  print(matrizGlobal)
