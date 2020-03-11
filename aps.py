@@ -42,15 +42,9 @@ for i in range(o_numero_de_membros):
   A = matriz_de_incidencia[i][3]
 
   elementos.append(Elemento(numero_do_elemento,p1,p2,E,A,incidencia))
-#   print("Matriz k: ")
-#   print(elementos[0].matrizK)
-#   Matriz_base = retorna_matriz_global(incidencia,Matriz_base,elementos[0].matrizK)
-#   print("")
-#   print("Matriz Global:")
-#   print(Matriz_base)
-# print(elementos[0].matrizK)
 
 for elemento in elementos:
+  print("")
   print("ELEMENTO: " + str(elemento.numero))
   print("E: " + str(elemento.E))
   print("A: " + str(elemento.A))
@@ -58,6 +52,9 @@ for elemento in elementos:
   print("L: " + str(elemento.L))
   print("sen: " + str(elemento.sen))
   print("cos: " + str(elemento.cos))
+  print("")
   print("matrizK: " + str(elemento.matrizK))
   print("GDL: " + str(elemento.gdls) + "\n")
-  matrizGlobal = retorna_matriz_global(elemento.gdls,elemento.matrizK,Matriz_base)
+  matrizGlobal = retorna_matriz_global(elemento.gdls,elemento.matrizK,Matriz_base,numero_i_j)
+
+  print(matrizGlobal)
