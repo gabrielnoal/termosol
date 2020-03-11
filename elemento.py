@@ -1,6 +1,7 @@
 import math
 import numpy as np
 from itertools import permutations
+from itertools import combinations_with_replacement
 
 def retorna_K(E,A,L,sen,cos):
   mat_cos_sen = [
@@ -20,22 +21,38 @@ def retorna_K(E,A,L,sen,cos):
 
   return matriz_result
 
-def retorna_matriz_global(incidencia,mb,matrizK):
-    listas_graus_de_liberdade = [[] for i in range(len(incidencia) + 2)]
+def retorna_matriz_global(gdl,matrizK,matrizGlobal):
+    lista_base_index_acumulativa = [1,2,3,4]
+    lista_comb_gdl = []
+    lista_final_index_acumulativa = []
+    lista_soma_acumulativa = []
+    lista_soma_parcial_matriz_global = []
+    lista_soma_total_matriz_global = []
 
-    listas_combinacoes_incidencia[0] = [incidencia[0],incidencia[0]]
-    listas_combinacoes_incidencia[1] = [incidencia[0],incidencia[1]]
-    listas_combinacoes_incidencia[2] = [incidencia[1],incidencia[0]]
-    listas_combinacoes_incidencia[3] = [incidencia[1],incidencia[1]]
+    for item in range(len(lista_base_index_acumulativa)):
+        for data in lista_base_index_acumulativa:
+            lista_final_index_acumulativa.append([lista_base_index_acumulativa[item] - 1 , data - 1])
 
-    # for item in range(len(listas_combinacoes_incidencia)):
-    #     soma_acumulativa_matriz_geral = mb[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]]
-    #     soma_parcial_matriz_k = matrizK[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]]
-    # 
-    #     soma_final_matriz_geral = soma_acumulativa_matriz_geral + soma_parcial_matriz_k
-    #     mb[listas_combinacoes_incidencia[item][0]][listas_combinacoes_incidencia[item][1]] += soma_final_matriz_geral
+    for item in range(len(gdl)):
+        for data in gdl:
+            lista_comb_gdl.append([gdl[item] - 1,data - 1])
 
-    return mb
+    for item in range(len(lista_final_index_acumulativa)):
+        soma_matrizK_acumulativa = matrizK[lista_final_index_acumulativa[item][0]][lista_final_index_acumulativa[item][1]]
+        lista_soma_acumulativa.append(soma_matrizK_acumulativa)
+
+    for item in range(len(lista_final_index_acumulativa)):
+        soma_matrizGlobal_acumulativa = matrizGlobal[lista_comb_gdl[item][0]][lista_comb_gdl[item][1]]
+        lista_soma_parcial_matriz_global.append(soma_matrizGlobal_acumulativa)
+
+    for item in range(len(lista_soma_parcial_matriz_global)):
+        soma_elemento = lista_soma_parcial_matriz_global[item] + lista_soma_acumulativa[item]
+        lista_soma_total_matriz_global.append(soma_elemento)
+
+    for item in range(len(lista_comb_gdl)):
+        matrizGlobal[lista_comb_gdl[item][0]][lista_comb_gdl[item][1]] += lista_soma_total_matriz_global[item]
+
+    return matrizGlobal
 
 class Elemento(object):
   def __init__(self, numero, p1, p2, E, A, incidencia):

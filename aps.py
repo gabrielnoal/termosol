@@ -23,7 +23,6 @@ numero_de_restricoes = nr
 vetor_restricoes = R
 numero_i_j = 2 * numero_de_nos
 Matriz_base = [[0 for x in range(numero_i_j)] for y in range(numero_i_j)]
-
 elementos = []
 pontos = []
 
@@ -43,7 +42,6 @@ for i in range(o_numero_de_membros):
   A = matriz_de_incidencia[i][3]
 
   elementos.append(Elemento(numero_do_elemento,p1,p2,E,A,incidencia))
-
 #   print("Matriz k: ")
 #   print(elementos[0].matrizK)
 #   Matriz_base = retorna_matriz_global(incidencia,Matriz_base,elementos[0].matrizK)
@@ -62,3 +60,4 @@ for elemento in elementos:
   print("cos: " + str(elemento.cos))
   print("matrizK: " + str(elemento.matrizK))
   print("GDL: " + str(elemento.gdls) + "\n")
+  matrizGlobal = retorna_matriz_global(elemento.gdls,elemento.matrizK,Matriz_base)
