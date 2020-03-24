@@ -67,10 +67,10 @@ def AplicarContorno(matrizk, vetorP, vetor_carregamento):
 #del col
     contador=0
     for posD in delLista:
-      del matrizk[posD-contador]
-      del vetorP[posD-contador]
-      contador=+1
-
+      posD=posD-contador
+      del matrizk[posD]
+      del vetorP[posD]
+      contador=contador+1
     print("vetorP: {}".format(vetorP))
     print("vetor carregamento: {}".format(vetor_carregamento))
     vetorContornado = []
