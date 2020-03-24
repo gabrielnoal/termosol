@@ -53,14 +53,12 @@ def retorna_matriz_global(gdl,matrizK,matrizGlobal,numero_i_j):
     return matrizGlobal
 
 
-def AplicarContorno(matrizk, vetorP):
+def AplicarContorno(matrizk, vetorP, vetor_carregamento):
     delLista=[]
     contador=0
-    print()
     for i in range(len(vetorP)):
       if (vetorP[i] =="r"):
         delLista.append(i)
-        print(i)
 #del linha
     for h in range(len(matrizk)):
       for posD in delLista:
@@ -73,7 +71,16 @@ def AplicarContorno(matrizk, vetorP):
       del vetorP[posD-contador]
       contador=+1
 
-    return matrizk, vetorP        
+    print("vetorP: {}".format(vetorP))
+    print("vetor carregamento: {}".format(vetor_carregamento))
+    vetorContornado = []
+    for item in vetorP:
+      if(item != 'r'):
+        vetorContornado.append(vetor_carregamento[item - 1])
+      else:
+        vetorContornado.append(0.0)
+  
+    return matrizk, vetorContornado        
 
 
 class Elemento(object):
