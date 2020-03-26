@@ -18,8 +18,8 @@ Sugestao de uso:
 from funcoesTermosol import importa
 [nn,N,nm,Inc,nc,F,nr,R] = importa('entrada.xlsx')
 -------------------------------------------------------------------------------
-A funcao 'geraSaida' cria um arquivo nome.txt contendo as reacoes de apoio Ft, 
-deslocamentos Ut, forcas Fi e tensoes Ti internas. As entradas devem ser 
+A funcao 'geraSaida' cria um arquivo nome.txt contendo as reacoes de apoio  (vetorP inteiro) Ft, 
+deslocamentos (vetor u inteiro) Ut, deformações  Epsi, forcas  Fi (fi = ti *A) e tensoes (ti = epsi * E) Ti internas. As entradas devem ser 
 vetores coluna.
 
 Sugestao de uso:
