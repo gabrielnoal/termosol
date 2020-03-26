@@ -30,7 +30,6 @@ elementos = []
 pontos = []
 vetorP = []
 
-
 def main():
   for index_do_no in range(numero_de_nos):
     numero_do_no = index_do_no + 1
@@ -44,6 +43,14 @@ def main():
     else:
       vetorP.append(gdl)
 
+  vetorP_forcas = []    
+  for item in vetorP:
+      if(item != 'r'):
+        vetorP_forcas.append(vetor_carregamento[item - 1])
+      else:
+        vetorP_forcas.append(0.0)
+  print("vetorP_forcas: {}".format(vetorP_forcas))
+        
   for i in range(numero_de_membros):
     numero_do_elemento = i + 1
     incidencia = [int(matriz_de_incidencia[i][0]), int(matriz_de_incidencia[i][1])]
@@ -76,8 +83,8 @@ def main():
   print("Matriz Contornada {}x{} : {}".format(len(matrizContornada),len(matrizContornada[0]),matrizContornada)  + "\n")
   print("VetorP Contornado: {}".format(vetorContornado) + "\n")
 
-  # vetor_deslocamento = np.linalg.solve(matrizContornada,vetorContornado)
-  # print("Vetor deslocamento: {}".format(vetor_deslocamento) + "\n")
+  #vetor_deslocamento = np.linalg.solve(matrizContornada, vetorContornado, rcond=None)
+  #print("Vetor deslocamento: {}".format(vetor_deslocamento) + "\n")
 
 
 
