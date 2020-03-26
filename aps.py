@@ -57,16 +57,16 @@ def main():
     elementos.append(Elemento(numero_do_elemento,p1,p2,E,A,incidencia))
 
   for elemento in elementos:
-    print("ELEMENTO: {}".format(elemento.numero))
-    print("E: {}".format(elemento.E))
-    print("A: {}".format(elemento.A))
-    print("incidencia: {}".format(elemento.incidencia))
-    print("L: {}".format(elemento.L))
-    print("sen: {}".format(elemento.sen))
-    print("cos: {}".format(elemento.cos))
-    print("")
-    print("matrizK: {}".format(elemento.matrizK))
-    print("GDL: {}".format(elemento.gdls) + "\n\n")
+    # print("ELEMENTO: {}".format(elemento.numero))
+    # print("E: {}".format(elemento.E))
+    # print("A: {}".format(elemento.A))
+    # print("incidencia: {}".format(elemento.incidencia))
+    # print("L: {}".format(elemento.L))
+    # print("sen: {}".format(elemento.sen))
+    # print("cos: {}".format(elemento.cos))
+    # print("")
+    # print("matrizK: {}".format(elemento.matrizK))
+    # print("GDL: {}".format(elemento.gdls) + "\n\n")
     matrizGlobal = retorna_matriz_global(elemento.gdls, elemento.matrizK, Matriz_base, numero_i_j)
 
   #contorno da matriz 

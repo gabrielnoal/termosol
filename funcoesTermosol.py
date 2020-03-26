@@ -22,6 +22,12 @@ A funcao 'geraSaida' cria um arquivo nome.txt contendo as reacoes de apoio  (vet
 deslocamentos (vetor u inteiro) Ut, deformações  Epsi, forcas  Fi (fi = ti *A) e tensoes (ti = epsi * E) Ti internas. As entradas devem ser 
 vetores coluna.
 
+(vetorP inteiro)
+(vetor u inteiro)
+deformações
+forcas internas (fi = ti *A)
+tensões internas (ti = epsi * E)
+
 Sugestao de uso:
     
 from funcoesTermosol import geraSaida
