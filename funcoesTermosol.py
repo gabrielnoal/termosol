@@ -36,6 +36,9 @@ geraSaida('saida',Ft,Ut,Fi,Ti)
 
 """
 def plota(N,Inc):
+    print("Matriz dos nos: {}".format(N))
+    print("Matriz de incidencia: {}".format(Inc))
+
     # Numero de membros
     nm = len(Inc[:,0])
     
@@ -43,7 +46,7 @@ def plota(N,Inc):
     import matplotlib.pyplot as plt
 
 #    plt.show()
-    fig = plt.figure()
+    plt.figure()
     # Passa por todos os membros
     for i in range(nm):
         

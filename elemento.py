@@ -3,24 +3,6 @@ import numpy as np
 from itertools import permutations
 from itertools import combinations_with_replacement
 
-def retorna_K(E,A,L,sen,cos):
-  mat_cos_sen = [
-    [cos**2 , cos*sen , -(cos**2) , -(cos*sen)],
-    [cos*sen , sen**2 , -(cos*sen) , -(sen**2)],
-    [-(cos**2) , -(cos*sen) , cos**2 , cos*sen],
-    [-(cos*sen) , -(sen**2) , cos*sen , sen**2]
-    ]
-
-  matriz_result = [[] for i in range(len(mat_cos_sen))]
-  produtoEA = (E*A)/L
-
-  for element in range(len(mat_cos_sen)):
-    for item in mat_cos_sen[element]:
-      item = float(item)
-      Ke = produtoEA * item
-      matriz_result[element].append(Ke)
-
-  return matriz_result
 
 def retorna_matriz_global(gdl,matrizK,matrizGlobal,numero_i_j):
     lista_base_index_acumulativa = [1,2,3,4]
@@ -28,7 +10,6 @@ def retorna_matriz_global(gdl,matrizK,matrizGlobal,numero_i_j):
     lista_final_index_acumulativa = []
     lista_soma_acumulativa = []
     lista_soma_parcial_matriz_global = []
-    lista_soma_total_matriz_global = []
 
     for item in range(len(lista_base_index_acumulativa)):
         for data in lista_base_index_acumulativa:
@@ -47,7 +28,6 @@ def retorna_matriz_global(gdl,matrizK,matrizGlobal,numero_i_j):
         lista_soma_parcial_matriz_global.append(soma_matrizK_atual)
 
     for item in range(len(lista_comb_gdl)):
-        soma_atual_global = matrizGlobal[lista_comb_gdl[item][0]][lista_comb_gdl[item][1]]
         matrizGlobal[lista_comb_gdl[item][0]][lista_comb_gdl[item][1]] += lista_soma_parcial_matriz_global[item]
 
     return matrizGlobal
@@ -55,7 +35,6 @@ def retorna_matriz_global(gdl,matrizK,matrizGlobal,numero_i_j):
 
 def AplicarContorno(matrizk, vetorP, vetor_carregamento):
     delLista=[]
-    novaMatrix=[]
     for i in range(len(vetorP)):
       if (vetorP[i] =="r"):
         delLista.append(i)
@@ -108,10 +87,29 @@ class Elemento(object):
     self.L = math.sqrt(((x2-x1)**2) + ((y2-y1)**2))
     self.sen = (y2-y1)/self.L
     self.cos = (x2-x1)/self.L
-    self.matrizK = retorna_K(E,A,self.L,self.sen,self.cos)
+    self.matrizK = self.calcula_K(E,A,self.L,self.sen,self.cos)
     self.epsi = 0
     self.ti = 0
     self.fi = 0
+
+  def calcula_K(self, E,A,L,sen,cos):
+    mat_cos_sen = [
+      [cos**2 , cos*sen , -(cos**2) , -(cos*sen)],
+      [cos*sen , sen**2 , -(cos*sen) , -(sen**2)],
+      [-(cos**2) , -(cos*sen) , cos**2 , cos*sen],
+      [-(cos*sen) , -(sen**2) , cos*sen , sen**2]
+      ]
+
+    matriz_result = [[] for i in range(len(mat_cos_sen))]
+    produtoEA = (E*A)/L
+
+    for element in range(len(mat_cos_sen)):
+      for item in mat_cos_sen[element]:
+        item = float(item)
+        Ke = produtoEA * item
+        matriz_result[element].append(Ke)
+
+    return matriz_result
 
 
   def setForces(self, epsi):
