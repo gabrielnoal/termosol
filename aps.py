@@ -29,7 +29,7 @@ Matriz_base = [[0 for x in range(numero_i_j)] for y in range(numero_i_j)]
 elementos = []
 pontos = []
 vetorP = []
-
+vetorPCarregamento = []
 
 def main():
   for index_do_no in range(numero_de_nos):
@@ -37,12 +37,17 @@ def main():
     cordenadas = [matriz_dos_nos[0][index_do_no], matriz_dos_nos[1][index_do_no]]
     pontos.append(Ponto(numero_do_no, cordenadas))
 
+
   for gdl_index in range(2*numero_de_membros):
     gdl = gdl_index + 1
     if gdl_index in vetor_restricoes:
       vetorP.append('r')
+      vetorPCarregamento.append(0.0)
     else:
       vetorP.append(gdl)
+      vetorPCarregamento.append(vetor_carregamento[gdl_index])
+
+  print("vetorPCarregamento: {}".format(vetorPCarregamento))
 
   for i in range(numero_de_membros):
     numero_do_elemento = i + 1
@@ -71,13 +76,41 @@ def main():
 
   #contorno da matriz 
   print("Matriz Global {}x{}: {}".format(len(matrizGlobal), len(matrizGlobal[0]), matrizGlobal) + "\n")
-  print("vetorP: {}".format(vetorP))
-  matrizContornada , vetorContornado = AplicarContorno(matrizGlobal, vetorP, vetor_carregamento)
+  # print("vetorP: {}".format(vetorP))
+  matrizContornada , vetorContornado, index_do_corte = AplicarContorno(matrizGlobal, vetorP, vetor_carregamento)
   print("Matriz Contornada {}x{} : {}".format(len(matrizContornada),len(matrizContornada[0]),matrizContornada)  + "\n")
-  print("VetorP Contornado: {}".format(vetorContornado) + "\n")
+  # print("VetorP Contornado: {}".format(vetorContornado) + "\n")
 
-  # vetor_deslocamento = np.linalg.solve(matrizContornada,vetorContornado)
-  # print("Vetor deslocamento: {}".format(vetor_deslocamento) + "\n")
+  pre_vetor_deslocamento =np.linalg.lstsq(matrizContornada,vetorContornado,rcond=None)
+  vetor_deslocamento_contornado=pre_vetor_deslocamento[0]
+
+  vetor_deslcamento_completo=refazerContorno(vetor_deslocamento_contornado,index_do_corte,numero_de_nos)
+  print("Vetor deslocamento completo: {}".format(vetor_deslcamento_completo) + "\n")
+  print("Vetor deslocamento: {}".format(vetor_deslocamento_contornado) + "\n")
+  ##deformação
+  lista_ti = []
+  lista_fi = []
+  list_epsi = []
+
+  for elemento in elementos:
+    sen = elemento.sen
+    cos = elemento.cos
+    l = elemento.L
+    matriz = [-cos, -sen, cos, -sen]
+    vetor_def=[]
+    for index in elemento.gdls:
+      vetor_def.append(vetor_deslcamento_completo[index-1])
+    epsi = (1/l) * np.dot(matriz,vetor_def)
+    ti, fi = elemento.setForces(epsi)
+    lista_ti.append(ti)
+    lista_fi.append(fi)
+    list_epsi.append(epsi)
+    
+  geraSaida("saida.txt", vetorPCarregamento, vetor_deslcamento_completo, list_epsi, lista_fi, lista_ti)
+    
+
+
+
 
 
 

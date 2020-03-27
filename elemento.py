@@ -55,33 +55,42 @@ def retorna_matriz_global(gdl,matrizK,matrizGlobal,numero_i_j):
 
 def AplicarContorno(matrizk, vetorP, vetor_carregamento):
     delLista=[]
-    contador=0
+    novaMatrix=[]
     for i in range(len(vetorP)):
       if (vetorP[i] =="r"):
         delLista.append(i)
 #del linha
-    for h in range(len(matrizk)):
-      for posD in delLista:
-        del matrizk[h][posD-contador]
-        contador=+1
-#del col
+    contador=0
+    # for h in range(len(matrizk)):
+    for posD in delLista:
+      del matrizk[posD-contador]
+      contador+=1
+#del coluna
+    for linha in range (len(matrizk)):
+      contador=0
+      for item in delLista:
+        del matrizk[linha][item-contador]
+        contador+=1
+
+#del vetor
     contador=0
     for posD in delLista:
       posD=posD-contador
-      del matrizk[posD]
       del vetorP[posD]
-      contador=contador+1
-    print("vetorP: {}".format(vetorP))
-    print("vetor carregamento: {}".format(vetor_carregamento))
-    vetorContornado = []
-    for item in vetorP:
-      if(item != 'r'):
-        vetorContornado.append(vetor_carregamento[item - 1])
-      else:
-        vetorContornado.append(0.0)
-  
-    return matrizk, vetorContornado        
+      contador+=1
 
+    return matrizk, vetorP, delLista        
+
+def refazerContorno(matrix_final,matrix_index,numero_de_nos):
+    nova_matrix = []
+    contador=0
+    for i in range(2*numero_de_nos):
+      if i in matrix_index:
+        nova_matrix.append(0.0)
+      else: 
+        nova_matrix.append(matrix_final[contador])  
+        contador+=1
+    return nova_matrix
 
 class Elemento(object):
   def __init__(self, numero, p1, p2, E, A, incidencia):
@@ -100,6 +109,22 @@ class Elemento(object):
     self.sen = (y2-y1)/self.L
     self.cos = (x2-x1)/self.L
     self.matrizK = retorna_K(E,A,self.L,self.sen,self.cos)
+    self.epsi = 0
+    self.ti = 0
+    self.fi = 0
+
+
+  def setForces(self, epsi):
+    self.ti = epsi * self.E
+    self.fi = self.ti * self.A
+    self.epsi = epsi
+    return self.ti, self.fi
+
+
+# tensões internas (ti = epsi * E)
+# forcas internas (fi = ti *A)
+
+
 
 class Ponto(object):
   def __init__(self, numero, cordenadas):
@@ -107,3 +132,4 @@ class Ponto(object):
     self.x = cordenadas[0]
     self.y = cordenadas[1]
     self.gdl = [2 * numero - 1, 2 * numero]
+  
