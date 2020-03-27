@@ -12,7 +12,7 @@ from elemento import *
   vetor_carregamento,
   numero_de_restricoes,
   vetor_restricoes
-] = importa('entrada.xlsx')
+] = importa('testeFinal.xlsx')
 vetor_restricoes = [int(r[0]) for r in vetor_restricoes]
 vetor_carregamento = [c[0] for c in vetor_carregamento]
 
@@ -49,8 +49,8 @@ def main():
       vetorP_forcas.append(vetor_carregamento[gdl_index])
 
 
-  # print("vetorP: {}".format(vetorP))
-  print("vetorP_forcas: {}".format(vetorP_forcas))
+  print("vetorP: {}".format(vetorP))
+  # print("vetorP_forcas: {}".format(vetorP_forcas))
 
   for i in range(numero_de_membros):
     numero_do_elemento = i + 1
@@ -92,7 +92,7 @@ def main():
 
   vetor_deslcamento_completo = refazerContorno(vetor_deslocamento_contornado, index_do_corte, numero_de_nos)
   
-  print("Vetor deslocamento completo: {}x1 {}".format(len(vetor_deslcamento_completo),vetor_deslcamento_completo) + "\n")
+  # print("Vetor deslocamento completo: {}x1 {}".format(len(vetor_deslcamento_completo),vetor_deslcamento_completo) + "\n")
   # print("Vetor deslocamento: {}".format(vetor_deslocamento_contornado) + "\n")
   ##deformação
   lista_ti = []
@@ -114,20 +114,16 @@ def main():
     lista_fi.append(fi)
     list_epsi.append(epsi)
 
-  ####Plota os 2 graficos
-  # nova_matriz_dos_nos = [[],[]]
-  # for matriz_index in range(numero_de_nos):
-  #   deslocamentoX = 0
-  #   deslocamentoY = 0
-  #   print("x:{} y:{}".format(matriz_index * 2, matriz_index * 2 + 2))
-  #   [deslocamentoX, deslocamentoY] = vetor_deslcamento_completo[(matriz_index * 2): (matriz_index * 2 + 2)]
-  #   nova_matriz_dos_nos[0][matriz_index] += deslocamentoX
-  #   nova_matriz_dos_nos[1][matriz_index] += deslocamentoY
-  # dot =  np.array(matrizGlobal).dot(vetor_deslcamento_completo)
-  # print("Reações de apoio: {}".format(dot))
-  geraSaida("saida.txt", vetorP_forcas, vetor_deslcamento_completo, list_epsi, lista_fi, lista_ti)
-  # plota(matriz_dos_nos, matriz_de_incidencia)
-  # plota(nova_matriz_dos_nos, matriz_de_incidencia)
+  #Reação de Apoio
+  dot =  np.dot(matrizGlobal,vetor_deslcamento_completo)
+  reacoes_de_apoio = []
+  for i in range(len(vetorP)):
+    if vetorP[i] == 'r':
+      reacoes_de_apoio.append(dot[i])
+  
+  print("Reações de apoio: {}".format(reacoes_de_apoio))
+  geraSaida("saida.txt", reacoes_de_apoio, vetor_deslcamento_completo, list_epsi, lista_fi, lista_ti)
+  plota(matriz_dos_nos, matriz_de_incidencia)
 
     
 

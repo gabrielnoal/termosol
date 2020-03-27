@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import copy
 from itertools import permutations
 from itertools import combinations_with_replacement
 
@@ -34,31 +35,33 @@ def retorna_matriz_global(gdl,matrizK,matrizGlobal,numero_i_j):
 
 
 def AplicarContorno(matrizk, vetorP, vetor_carregamento):
+    matrizk_contornada = copy.deepcopy(matrizk)
+    vetorP_contornada = copy.deepcopy(vetorP)
     delLista=[]
-    for i in range(len(vetorP)):
-      if (vetorP[i] =="r"):
+    for i in range(len(vetorP_contornada)):
+      if (vetorP_contornada[i] =="r"):
         delLista.append(i)
 #del linha
     contador=0
-    # for h in range(len(matrizk)):
     for posD in delLista:
-      del matrizk[posD-contador]
+      del matrizk_contornada[posD-contador]
       contador+=1
+    
 #del coluna
-    for linha in range (len(matrizk)):
+    for linha in range (len(matrizk_contornada)):
       contador=0
       for item in delLista:
-        del matrizk[linha][item-contador]
+        del matrizk_contornada[linha][item-contador]
         contador+=1
 
 #del vetor
     contador=0
     for posD in delLista:
       posD=posD-contador
-      del vetorP[posD]
+      del vetorP_contornada[posD]
       contador+=1
 
-    return matrizk, vetorP, delLista        
+    return matrizk_contornada, vetorP_contornada, delLista        
 
 def refazerContorno(matrix_final,matrix_index,numero_de_nos):
     nova_matrix = []
