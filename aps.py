@@ -17,11 +17,11 @@ vetor_restricoes = [int(r[0]) for r in vetor_restricoes]
 vetor_carregamento = [c[0] for c in vetor_carregamento]
 
 # print("numero de nós: {}".format(numero_de_nos))
-print("matriz dos nos: {}".format(matriz_dos_nos))
+# print("matriz dos nos: {}".format(matriz_dos_nos))
 # print("o numero de membros: {}".format(numero_de_membros))
 # print("matriz de incidencia: {}".format(matriz_de_incidencia))
 # print("numero de cargas: {}".format(numero_de_cargas))
-print("vetor carregamento {}x1: {}".format(len(vetor_carregamento),vetor_carregamento))
+# print("vetor carregamento {}x1: {}".format(len(vetor_carregamento),vetor_carregamento))
 # print("numero de restricoes: {}".format(numero_de_restricoes))
 # print("vetor restricoes: {}".format(vetor_restricoes))
 
@@ -49,7 +49,7 @@ def main():
       vetorP_forcas.append(vetor_carregamento[gdl_index])
 
 
-  print("vetorP: {}".format(vetorP))
+  # print("vetorP: {}".format(vetorP))
   # print("vetorP_forcas: {}".format(vetorP_forcas))
 
   for i in range(numero_de_membros):
@@ -78,7 +78,7 @@ def main():
     matrizGlobal = retorna_matriz_global(elemento.gdls, elemento.matrizK, Matriz_base, numero_i_j)
 
   #contorno da matriz 
-  print("Matriz Global {}x{}: {}".format(len(matrizGlobal), len(matrizGlobal[0]), matrizGlobal) + "\n")
+  # print("Matriz Global {}x{}: {}".format(len(matrizGlobal), len(matrizGlobal[0]), matrizGlobal) + "\n")
   matrizContornada , vetorContornado, index_do_corte = AplicarContorno(matrizGlobal, vetorP, vetor_carregamento)
   # print("Matriz Contornada {}x{} : {}".format(len(matrizContornada),len(matrizContornada[0]),matrizContornada)  + "\n")
 
@@ -121,8 +121,9 @@ def main():
     if vetorP[i] == 'r':
       reacoes_de_apoio.append(dot[i])
   
-  print("Reações de apoio: {}".format(reacoes_de_apoio))
+  # print("Reações de apoio: {}".format(reacoes_de_apoio))
   geraSaida("saida.txt", reacoes_de_apoio, vetor_deslcamento_completo, list_epsi, lista_fi, lista_ti)
+
   plota(matriz_dos_nos, matriz_de_incidencia)
 
     
