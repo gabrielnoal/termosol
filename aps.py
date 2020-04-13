@@ -12,7 +12,7 @@ from elemento import *
   vetor_carregamento,
   numero_de_restricoes,
   vetor_restricoes
-] = importa('testeFinal.xlsx')
+] = importa('entrada.xlsx')
 vetor_restricoes = [int(r[0]) for r in vetor_restricoes]
 vetor_carregamento = [c[0] for c in vetor_carregamento]
 
