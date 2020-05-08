@@ -94,6 +94,7 @@ class Elemento(object):
     self.epsi = 0
     self.ti = 0
     self.fi = 0
+    self.peso = A*self.L*848
 
   def calcula_K(self, E,A,L,sen,cos):
     mat_cos_sen = [

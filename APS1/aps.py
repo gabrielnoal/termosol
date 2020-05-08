@@ -99,8 +99,16 @@ def main():
   lista_fi = []
   list_epsi = []
 
-
+  peso_total = 0
+  maiorForca = [0,0]
+  menorForca = [0,0]
   for elemento in elementos:
+    print("ELEMENTO: {}".format(elemento.numero))
+    # print("E: {}".format(elemento.E))
+    print("A: {}".format(elemento.A))
+    print("incidencia: {}".format(elemento.incidencia))
+    # print("L: {}".format(elemento.L))
+    peso_total += elemento.peso
     sen = elemento.sen
     cos = elemento.cos
     l = elemento.L
@@ -112,8 +120,17 @@ def main():
     ti, fi = elemento.setForces(epsi)
     lista_ti.append(ti)
     lista_fi.append(fi)
-    list_epsi.append(epsi)
+    if abs(fi) > maiorForca[1]:
+      maiorForca = [elemento.numero,abs(fi)]
+    if abs(fi) < menorForca[1] or elemento.numero == 1:
+      menorForca = [elemento.numero,abs(fi)]
+    
+    print("forca: {}\n".format(fi))
 
+    list_epsi.append(epsi)
+  print("maiorForca: {}".format(maiorForca))
+  print("menorForca: {}".format(menorForca))
+  print("Peso total: {}g".format(peso_total*1000))
   #Reação de Apoio
   dot =  np.dot(matrizGlobal,vetor_deslcamento_completo)
   reacoes_de_apoio = []
@@ -123,8 +140,8 @@ def main():
   
   # print("Reações de apoio: {}".format(reacoes_de_apoio))
   geraSaida("saida.txt", reacoes_de_apoio, vetor_deslcamento_completo, list_epsi, lista_fi, lista_ti)
-
   plota(matriz_dos_nos, matriz_de_incidencia)
+
 
     
 
