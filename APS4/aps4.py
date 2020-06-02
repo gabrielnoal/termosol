@@ -18,65 +18,41 @@ a = 15.0
 b = 15.0
 k = 1.0
 Q = 80.0
+alpha = u
+tol = 1e-4
 
 malha_x = [x for x in np.arange(x_min, x_max + delta_x, delta_x)]
 malha_y = [y for y in np.arange(y_min, y_max + delta_y, delta_y)]
-
-
-def dif_central(malha, x, y, eixo):
-    if eixo == 'x':
-        return (malha[x + 1][y] - 2*malha[x][y] + malha[x - 1][y])/(delta_x**2)
-    if eixo == 'y':
-        return (malha[x][y + 1] - 2*malha[x][y] + malha[x][y - 1])/(delta_y**2)
-
-
-def dif_central2(malha, x, y, eixo):
-    if eixo == 'x':
-        return (malha[x + 1][y] - malha[x - 1][y])/(2*delta_x)
-    if eixo == 'y':
-        return (malha[x][y + 1] - malha[x][y - 1])/(2*delta_y)
-
-
-print(len(malha_x), len(malha_y))
+# print(len(malha_x), len(malha_y))
 malha_atual = np.zeros(shape=(len(malha_x), len(malha_y)))
-# for i in range(len(malha)):
-#   malha[i][0] = temperaturas_iniciais[-1]
-#   malha[i][-1] = temperaturas_iniciais[1]
-# malha[0].fill(temperaturas_iniciais[0])
-# malha[-1].fill(temperaturas_iniciais[-2])
-
-
-print("malha:\n {}\n".format(malha_atual))
 malha_atualizada = np.copy(malha_atual)
 
 
 for t in np.arange(0, t_max + delta_t, delta_t):
-    for x in np.arange(0, len(malha_x), 1):
-        for y in np.arange(0, len(malha_y), 1):
-            q = Q if (t < t_despejo and x == a and y == b) else 0
-            
-            f0 = (q * delta_t)/(delta_x * delta_y)
+    lista_erros = []
+    for i in np.arange(1, len(malha_x) - 1, 1):
+        for j in np.arange(1, len(malha_y) - 1, 1):
+            t1 = alpha * sin(pi / 5 * j) * (malha_atual[i + 1][j] - malha_atual[i - 1][j])/(2*delta_x)
+            t2 = u * (malha_atual[i][j + 1] -malha_atual[i][j - 1])/(2*delta_y)
+            t3 = -k / (delta_x**2) * (malha_atual[i][j + 1] - 2*malha_atual[i][j] + malha_atual[i][j - 1])
+            t4 = -k / (delta_y**2) * (malha_atual[i + 1][j] - 2*malha_atual[i][j] + malha_atual[i - 1][j])
+            soma = t1 + t2 + t3 + t4
+            _q = Q if j == b and i == a and t <= t_despejo else 0
 
-            f1 = (u * delta_t * (dif_central2(malha_atual, x, y, 'x')
-                                 if (x > 0 and x < len(malha_x) - 1) else 0))
+            malha_atualizada[i][j] = ((delta_t * _q) / (delta_x * delta_y)) - delta_t * soma + malha_atual[i, j]
 
-            f2 = (u * sin((pi*x)/5) * delta_t * (dif_central2(malha_atual, x, y, 'y')
-                                                 if (y > 0 and y < len(malha_y) - 1) else 0))
+            if malha_atualizada[i][j] != 0:
+                erro = np.abs((malha_atualizada[i][j] - malha_atual[i][j]) / malha_atual[i][j])
+                lista_erros.append(erro)
 
-            f3 = (k * delta_t * (dif_central(malha_atual, x, y, 'x')
-                                 if (x > 0 and x < len(malha_x) - 1) else 0))
-
-            f4 = (k * delta_t * (dif_central(malha_atual, x, y, 'y')
-                                 if (y > 0 and y < len(malha_y) - 1) else 0))
-
-            c = f0 - f1 - f2 + f3 + f4 + malha_atual[x][y]
-            malha_atualizada[x][y] = 0 if c < 0 else c
+    if np.max(lista_erros) < tol:
+        print("Erro relativo máximo: ", np.max(lista_erros))
 
     malha_atual = np.copy(malha_atualizada)
 
-print("malha atualizada")
-for i in malha_atual:
-    print(i)
+# print("malha atualizada")
+# for i in malha_atual:
+#     print(i)
 
 print("C[40][40]:\n {}".format(malha_atual[40][40]))
 plt.axis((0, x_max, 0, y_max))
