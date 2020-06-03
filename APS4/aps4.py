@@ -32,21 +32,21 @@ for t in np.arange(0, t_max + delta_t, delta_t):
     lista_erros = []
     for i in np.arange(1, len(malha_x) - 1, 1):
         for j in np.arange(1, len(malha_y) - 1, 1):
-            t1 = alpha * sin(pi / 5 * j) * (malha_atual[i + 1][j] - malha_atual[i - 1][j])/(2*delta_x)
+            t1 = v * (malha_atual[i + 1][j] - malha_atual[i - 1][j])/(2*delta_x)
             t2 = u * (malha_atual[i][j + 1] -malha_atual[i][j - 1])/(2*delta_y)
-            t3 = -k / (delta_x**2) * (malha_atual[i][j + 1] - 2*malha_atual[i][j] + malha_atual[i][j - 1])
-            t4 = -k / (delta_y**2) * (malha_atual[i + 1][j] - 2*malha_atual[i][j] + malha_atual[i - 1][j])
+            t3 = -k * (malha_atual[i][j + 1] - 2*malha_atual[i][j] + malha_atual[i][j - 1]) / (delta_x**2)
+            t4 = -k * (malha_atual[i + 1][j] - 2*malha_atual[i][j] + malha_atual[i - 1][j]) / (delta_y**2)
             soma = t1 + t2 + t3 + t4
-            _q = Q if j == b and i == a and t <= t_despejo else 0
+            Qc = Q if (j == b and i == a and t <= t_despejo) else 0
 
-            malha_atualizada[i][j] = ((delta_t * _q) / (delta_x * delta_y)) - delta_t * soma + malha_atual[i, j]
+            malha_atualizada[i][j] = ((delta_t * Qc) / (delta_x * delta_y)) - (delta_t * soma) + malha_atual[i, j]
 
-            if malha_atualizada[i][j] != 0:
+            if malha_atual[i][j] != 0:
                 erro = np.abs((malha_atualizada[i][j] - malha_atual[i][j]) / malha_atual[i][j])
                 lista_erros.append(erro)
 
-    if np.max(lista_erros) < tol:
-        print("Erro relativo máximo: ", np.max(lista_erros))
+    # if len(lista_erros) > 0 and np.max(lista_erros) < tol:
+        # print("Erro relativo máximo: ", np.max(lista_erros))
 
     malha_atual = np.copy(malha_atualizada)
 

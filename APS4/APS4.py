@@ -72,8 +72,7 @@ def getTemp(m, nn, t, temp1, temp2, temp3, temp4):
                 soma = t1 + t2 + t3 + t4
 
                 if i == b and j == a and n*dt <= T:
-                    C[i, j] = dt * Qponto / \
-                        (dx * dy) - dt * soma + C_back[i, j]
+                    C[i, j] = dt * Qponto / (dx * dy) - dt * soma + C_back[i, j]
                 else:
                     C[i, j] = - dt * soma + C_back[i, j]
 
