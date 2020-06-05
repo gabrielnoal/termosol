@@ -12,13 +12,13 @@ t_despejo = 2.0  # s
 t_max = 5.0  # s
 delta_x = 0.5  # m
 delta_y = delta_x  # m
-delta_t = 0.05  # s
-u = 1.0  # m/s
-v = 0.0  # m/s
-a = 15.0  # m
+delta_t = 0.025  # s
+u = 0.50  # m/s
+v = 0.50  # m/s
+a = 5.0  # m
 b = 15.0  # m
-k = 1.0  # m
-Q = 80.0  # m
+k = 2.0  # m²/s
+Q = 120.0  # kg/m/s
 alpha = u  # m
 tol = 1e-4  # m
 
@@ -48,8 +48,7 @@ for t in np.arange(0, t_max + delta_t, delta_t):
             #   print("t3: {}".format(t3))
             #   print("t4: {}\n".format(t4))
             soma = t1 + t2 + t3 + t4
-            Qc = Q if (x*delta_x == b and y*delta_y ==
-                       a and t <= t_despejo) else 0
+            Qc = Q if (x*delta_x == a and y*delta_y == b and t <= t_despejo) else 0
 
             malha_atualizada[y][x] = (
                 (delta_t * Qc) / (delta_x * delta_y)) - (delta_t * soma) + malha_atual[y, x]
@@ -73,10 +72,16 @@ for t in np.arange(0, t_max + delta_t, delta_t):
 
     malha_atual = np.copy(malha_atualizada)
 
-x = 20
-y = 20
+pontos = [[15,5],[26, 27.5], [11,28], [6.5,17], [7.5, 12.5], [7.5,20.5]]
 
-print("C[{}][{}]:\n {}".format(x, y, malha_atual[int(y/delta_y)][int(x/delta_x)]))
+for p in pontos:
+  x = p[1]
+  y = p[0]
+  y_index = int(y/delta_y)
+  x_index = int(x/delta_x)
+  print("y_index: {}, x_index: {}".format(y_index, x_index))
+  print("C[{}][{}]:\n {}".format(x, y, malha_atual[y_index][x_index]))
+print("Velor max: {}".format(np.max(malha_atual)))
 plt.imshow(malha_atual)
 plt.colorbar()
 plt.gca().invert_yaxis()
