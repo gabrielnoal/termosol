@@ -11,19 +11,7 @@ t_max = 20.0
 delta_x = 0.100
 delta_y = delta_x
 delta_t = 26.325
-print("delta_t: {}".format(delta_t))
-
-# condutividade termal
-k = 230
-# densidade
-p = 2.7*10.0**(3)
-# capacidade de calor especifica
-cp = 897.0
-
-alpha = k/(p*cp)
-fo = alpha * (delta_t/((delta_x)**2))
-print("alpha: {}".format(alpha))
-print("fo: {}".format(fo))
+print("delta_t: {}".format(delt
 
 #               top    rigth  bottom   left 
 borda_isolada = [False, False, True, False]
